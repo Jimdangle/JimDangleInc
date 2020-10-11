@@ -4,9 +4,12 @@ import pandas as pd
 
 print("\nNEW RUN\n--------\n")
 
+tolerance = 3
+
 
 # takes in a single table, do not use this function
-# just let URLtoArr do its thing if you can
+# If you want to change the minimum length requirement change the 'tolerance' variable
+
 
 def filterDftoArr(df_in):
 	df_in = df_in.astype('str')
@@ -16,7 +19,7 @@ def filterDftoArr(df_in):
 	out_arr = []
 
 	for word in og_arr:
-		if len(word) > 1:
+		if len(word) > tolerance:
 			out_arr.append(word)
 		else:
 			continue
@@ -25,8 +28,9 @@ def filterDftoArr(df_in):
 	return out_arr
 
 
-# @param: list of urls to sites with a table of words (will be converted to strings regardless)
+# @param: list of urls, array for words to be added to
 # appends the overall array that is plugged in
+# @return void
 
 def URLtoArr(urls, some_list):
 	# checks to see if a table is on the page
@@ -36,7 +40,7 @@ def URLtoArr(urls, some_list):
 		if len(pd.read_html(links)) < 0:
 			print('Could not find a table on this link')
 		else:
-			print('Found link!')
+			print('Found link! : (' + links+") \n")
 
 			temp_df = pd.read_html(links)
 
@@ -55,16 +59,16 @@ def URLtoArr(urls, some_list):
 
 
 
-#adjectives array
+#adjectives
+
 adj_total = []
 
-# first adj table
+# first adj link
 url_adj = "https://grammar.yourdictionary.com/parts-of-speech/adjectives/list-of-adjective-words.html"
 
 
 # add links to this array and they will be added to the overall table)
-adj_urls = [url_adj]
-
+adj_urls = [url_adj,"https://www.enchantedlearning.com/wordlist/adjectives.shtml"]
 URLtoArr(adj_urls, adj_total)
 
 
@@ -75,12 +79,16 @@ URLtoArr(adj_urls, adj_total)
 
 
 # nouns
-
-
+#link stored as variable
 url_nouns = "https://eslgrammar.org/list-of-nouns/"
+
+# general nouns array 
 nouns = []
 
+# put links to websites with <table> elements you want in the general array
 noun_urls = [url_nouns]
+
+
 
 URLtoArr(noun_urls, nouns)
 
