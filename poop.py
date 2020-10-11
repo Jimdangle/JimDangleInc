@@ -5,91 +5,84 @@ import pandas as pd
 print("\nNEW RUN\n--------\n")
 
 
+# takes in a single table, do not use this function
+# just let URLtoArr do its thing if you can
 
-def testDFToArr(df_in):
+def filterDftoArr(df_in):
 	df_in = df_in.astype('str')
-	mask = df_in.str.len()>1
-	df_in = df_in.loc[mask]
 
-	out_arr = df_in.flatten()
+	og_arr = df_in.flatten()
+
+	out_arr = []
+
+	for word in og_arr:
+		if len(word) > 1:
+			out_arr.append(word)
+		else:
+			continue
+
 	
 	return out_arr
 
 
+# @param: list of urls to sites with a table of words (will be converted to strings regardless)
+# appends the overall array that is plugged in
 
-#adjectives
+def URLtoArr(urls, some_list):
+	# checks to see if a table is on the page
 
+
+	for links in urls:
+		if len(pd.read_html(links)) < 0:
+			print('Could not find a table on this link')
+		else:
+			print('Found link!')
+
+			temp_df = pd.read_html(links)
+
+			temp_df_first = temp_df[0].values
+
+			out_arr = filterDftoArr(temp_df_first)
+
+			some_list += out_arr
+
+	
+
+
+
+
+
+
+
+
+#adjectives array
+adj_total = []
+
+# first adj table
 url_adj = "https://grammar.yourdictionary.com/parts-of-speech/adjectives/list-of-adjective-words.html"
-df_adj = pd.read_html(url_adj)
 
-adj_col1 = df_adj[0][0]
-adj_col2 = df_adj[0][1]
-adj_col3 = df_adj[0][2]
-adj_col4 = df_adj[0][3]
 
-adj_test = df_adj[0].values
+# add links to this array and they will be added to the overall table)
+adj_urls = [url_adj]
 
-adj_test = testDFToArr(adj_test)
-
-print(adj_test)
-
-adjectives = []
+URLtoArr(adj_urls, adj_total)
 
 
 
-for word in adj_col1:
-	if len(word) < 3:
-		continue
-	else:
-		adjectives.append(word)
-
-for word in adj_col2:
-	if len(word) < 3:
-		continue
-	else:
-		adjectives.append(word)
-
-for word in adj_col3:
-	if len(word) < 3:
-		continue
-	else:
-		adjectives.append(word)
-
-for col in adj_col4:
-	if len(col) < 3:
-		continue
-	else:
-		adjectives.append(col)
 
 
-print(len(adjectives))
 
 
 
 # nouns
 
+
 url_nouns = "https://eslgrammar.org/list-of-nouns/"
-df_nouns = pd.read_html(url_nouns)
 nouns = []
 
-noun_col1 = df_nouns[0][0]
-noun_col2 = df_nouns[0][1]
-noun_col3 = df_nouns[0][2]
+noun_urls = [url_nouns]
 
-for noun in noun_col1:
-	nouns.append(noun)
-
-for noun in noun_col2:
-	nouns.append(noun)
-
-for noun in noun_col3:
-	nouns.append(noun)
-
-nouns.reverse()
-
-nouns.remove(nouns[0])
-
-print("\n\n")
+URLtoArr(noun_urls, nouns)
 
 
 
@@ -106,7 +99,7 @@ while running:
 	inp = input("\n")
 	if inp == '1':
 		intro = intros[np.random.randint(len(intros))]
-		adj = adjectives[np.random.randint(len(adjectives))]
+		adj = adj_total[np.random.randint(len(adj_total))]
 		noun = nouns[np.random.randint(len(nouns))]
 
 		output_str = intro + " " + adj + " " + noun
