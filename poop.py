@@ -38,9 +38,9 @@ def URLtoArr(urls, some_list):
 
 	for links in urls:
 		if len(pd.read_html(links)) < 0:
-			print('Could not find a table on this link')
+			print('\nCould not find a table on this link')
 		else:
-			print('Found link! : (' + links+") \n")
+			print('\nFound link! : (' + links+") \n")
 
 			temp_df = pd.read_html(links)
 
@@ -98,21 +98,51 @@ URLtoArr(noun_urls, nouns)
 
 intros = ["A", "The", "The Life of a", "Enter the", "After the", "The Most", "Becoming the", "The Tale of the", "A song of", "In Lieu of The", "Harry Potter and The", "I Shat out a"]
 
+# Parent lists 
+all_words = [nouns, adj_total, intros]
+all_urls = [noun_urls, adj_urls]
 
-
+# main loop
 running = True
-
 while running:
-	print("1. Generate Title \n2. Exit")
+
+	# Main Screen
+	print("1. Generate Title \n2. Add url to pool\n3. Exit")
 	inp = input("\n")
+
+	# option 1 : generate title
 	if inp == '1':
+
+		# generate random value based on  total number of items in each list
 		intro = intros[np.random.randint(len(intros))]
 		adj = adj_total[np.random.randint(len(adj_total))]
 		noun = nouns[np.random.randint(len(nouns))]
 
+		#create output string
 		output_str = intro + " " + adj + " " + noun
 		print("\n Generated Name: " + output_str)
-	else:
+
+	# option 2 : add a url while in the app
+	elif inp == '2':
+
+		print("\n1. Nouns\n2. Adjectives")
+		url_inp = input("\n")
+		print(url_inp)
+		if url_inp == '1':
+			in_link = input("enter link with out quotes: ")
+			noun_urls.append(in_link)
+
+			URLtoArr(noun_urls, nouns)
+		elif url_inp == '2':
+			in_link = input("enter link without quotes: ")
+			adj_urls.append(in_link)
+
+
+	
+
+
+	# option 3 : end app
+	elif inp =='3':
 		running = False
 
 
