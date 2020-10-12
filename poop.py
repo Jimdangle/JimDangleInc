@@ -107,7 +107,7 @@ running = True
 while running:
 
 	# Main Screen
-	print("1. Generate Title \n2. Add url to pool\n3. Exit")
+	print("1. Generate Title \n2. Add url to pool\n3. add intro phrase\n4. Exit")
 	inp = input("\n")
 
 	# option 1 : generate title
@@ -120,7 +120,7 @@ while running:
 
 		#create output string
 		output_str = intro + " " + adj + " " + noun
-		print("\n Generated Name: " + output_str)
+		print("\n Generated Name: " + output_str + "\n")
 
 	# option 2 : add a url while in the app
 	elif inp == '2':
@@ -137,12 +137,16 @@ while running:
 			in_link = input("enter link without quotes: ")
 			adj_urls.append(in_link)
 
+	# option 3: add intro phrase
+	elif inp == '3':
 
-	
+		print('Enter intro phrase: ')
+		in_intro = input('')
+		intros.append(in_intro)
 
 
-	# option 3 : end app
-	elif inp =='3':
+	# option 4 : end app
+	elif inp =='4':
 		running = False
 
 
