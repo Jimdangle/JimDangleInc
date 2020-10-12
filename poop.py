@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd 
 
 
-print("\nNEW RUN\n--------\n")
+print("\n--------\nPoopy Title Generator\n--------\n")
 
 tolerance = 3
 
