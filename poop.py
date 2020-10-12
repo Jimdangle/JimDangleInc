@@ -107,7 +107,7 @@ running = True
 while running:
 
 	# Main Screen
-	print("1. Generate Title \n2. Add url to pool\n3. add intro phrase\n4. Exit")
+	print("1. Generate Title \n2. Add url to pool\n3. Add intro phrase\n4. Change Tolerance\n5. Exit")
 	inp = input("\n")
 
 	# option 1 : generate title
@@ -144,9 +144,16 @@ while running:
 		in_intro = input('')
 		intros.append(in_intro)
 
-
-	# option 4 : end app
+	# option 4 : change tolerance 
 	elif inp =='4':
+
+		print('Enter new tolerance: ')
+		in_tolerance = input('')
+		tolerance = in_tolerance
+
+
+	#end app
+	else:
 		running = False
 
 
